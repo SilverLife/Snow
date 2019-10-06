@@ -1,0 +1,3 @@
+[submodule "Snow/Shared"]
+	path = Snow/Shared
+	url = https://github.com/SilverLife/Shared.git
