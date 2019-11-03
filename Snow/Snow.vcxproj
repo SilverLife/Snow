@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,6 +116,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameLogic\SnowGame.cpp" />
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommonDefines.h" />
+    <ClInclude Include="GameLogic\SnowGame.h" />
+    <ClInclude Include="Graphics\GraphicField.h" />
+    <ClInclude Include="Object\FieldObjects.h" />
+    <ClInclude Include="Shared\ConsoleHelper\ConsoleHelper.h" />
+    <ClInclude Include="Shared\FieldData\Field.h" />
+    <ClInclude Include="Shared\Geometry\Point.h" />
+    <ClInclude Include="Shared\Geometry\RectangleSize.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
