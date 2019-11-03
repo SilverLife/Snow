@@ -65,14 +65,8 @@ namespace Snow
 			for (int i = 0; i < balls_count; i++)
 			{
 				const Point pos = { static_cast<PointCoordType>(3 + i * step), static_cast<PointCoordType>(5) };
-				_balls.emplace_back(pos, Point{ -1,1 });
+				_balls.emplace_back(pos, Point{ -1,1 }, std::rand() % 30);
 				_field.SetObject(pos, FieldObject::Ball);
-			}
-
-			for (PointCoordType i = work_width / 2 - 4; i < work_width / 2 + 4; i++)
-			{
-				_player_block.emplace_back(Point{ i, static_cast<PointCoordType>(2) });
-				_field.SetObject(Point{ i, static_cast<PointCoordType>(2) }, FieldObject::UndestructbleWall);
 			}
 		}
 
@@ -154,47 +148,6 @@ namespace Snow
 				tick = 0;
 				MoveBalls();
 			}
-
-			if (_platform_offset != 0)
-			{
-				MovePlatform(_platform_offset < 0);
-			}
-		}
-
-		void SnowGame::MovePlatform(bool to_left)
-		{
-			if (to_left)
-			{
-				if (_field.IsEmpty(_player_block.front() - Point{ 1, 0 }))
-				{
-					for (unsigned int i = 0; i < _player_block.size(); i++)
-					{
-						_field.MoveObject(_player_block[i], _player_block[i] - Point{1, 0});
-						_player_block[i] -= Point{ 1, 0 };
-					}
-				}
-			}
-			else
-			{
-				if (_field.IsEmpty(_player_block.back() + Point{ 1, 0 }))
-				{
-					for (int i = _player_block.size() - 1; i >= 0; i--)
-					{
-						_field.MoveObject(_player_block[i], _player_block[i] + Point{ 1, 0 });
-						_player_block[i] += Point{ 1, 0 };
-					}
-				}
-			}
-		}
-
-		void SnowGame::OnKeyPressed(char ch)
-		{
-			switch (ch)
-			{
-			case 'a': _platform_offset = -1; break;
-			case 'd': _platform_offset = 1; break;
-			case 27 : _is_game_active = false; break;
-			}
-		}
+		}	
 	}
 }	

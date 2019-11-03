@@ -16,9 +16,6 @@ namespace Snow
 
 			std::vector<Object::Ball> _balls;
 
-			std::vector<Point> _player_block;
-			int _platform_offset = 0;
-
 			bool _is_game_active = true;
 			
 			void PrepareField();
@@ -42,9 +39,6 @@ namespace Snow
 
 			bool IsGameOver() const { return !_is_game_active; }
 
-			void OnKeyPressed(char ch);
-
-			void ClearPlatformOffset() { _platform_offset = 0; }
 		};
 	}
 }

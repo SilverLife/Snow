@@ -47,5 +47,8 @@
     <ClInclude Include="Shared\ConsoleHelper\ConsoleHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Shared\CommonStructs\Ticker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

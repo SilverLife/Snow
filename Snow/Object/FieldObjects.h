@@ -2,6 +2,7 @@
 #pragma once
 
 #include "../CommonDefines.h"
+#include "../Shared/CommonStructs/Ticker.h"
 
 namespace Snow
 {
@@ -18,14 +19,15 @@ namespace Snow
 		};
 
 
-		class Ball
+		class Ball : public Shared::CommonStructs::TickerInt
 		{
 			Point _position;
 			Point _motion_direction;
 		public:
-			Ball(Point start_position, Point motion_direction)
+			Ball(Point start_position, Point motion_direction, int speed)
 				: _position(start_position)
 				, _motion_direction(motion_direction)
+				, Shared::CommonStructs::TickerInt(speed)
 			{}
 
 			Point Position() const { return _position; }

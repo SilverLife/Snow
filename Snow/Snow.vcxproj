@@ -124,6 +124,7 @@
     <ClInclude Include="GameLogic\SnowGame.h" />
     <ClInclude Include="Graphics\GraphicField.h" />
     <ClInclude Include="Object\FieldObjects.h" />
+    <ClInclude Include="Shared\CommonStructs\Ticker.h" />
     <ClInclude Include="Shared\ConsoleHelper\ConsoleHelper.h" />
     <ClInclude Include="Shared\FieldData\Field.h" />
     <ClInclude Include="Shared\Geometry\Point.h" />
