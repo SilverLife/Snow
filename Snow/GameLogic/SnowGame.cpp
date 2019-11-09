@@ -50,22 +50,22 @@ namespace Snow
 			//}
 
 
-			const auto[width, height] = _field.Size();
-			for (PointCoordType i = 3; i < width - 3; i++)
-			{
-				for (PointCoordType j = height - 3; j >= height - 10; j--)
-				{
-					_field.SetObject({ i,j }, FieldObject::Wall);
-				}
-			}
+			//const auto[width, height] = _field.Size();
+			//for (PointCoordType i = 3; i < width - 3; i++)
+			//{
+			//	for (PointCoordType j = height - 3; j >= height - 10; j--)
+			//	{
+			//		_field.SetObject({ i,j }, FieldObject::Wall);
+			//	}
+			//}
 
-			const auto balls_count = 5;
+			const auto balls_count = 1;
 			const auto work_width = _field.Size()._width - 6;
 			const auto step = work_width / balls_count;
 			for (int i = 0; i < balls_count; i++)
 			{
 				const Point pos = { static_cast<PointCoordType>(3 + i * step), static_cast<PointCoordType>(5) };
-				_balls.emplace_back(pos, Point{ -1,1 }, std::rand() % 30);
+				_balls.emplace_back(pos, Point{ 1,1 }, std::rand() % 30);
 				_field.SetObject(pos, FieldObject::Ball);
 			}
 		}
@@ -130,7 +130,10 @@ namespace Snow
 
 			for (unsigned int i = 0; i < _balls.size(); i++)
 			{
-				MoveBall(_balls[i]);
+				if (_balls[i].PerformTick())
+				{
+					MoveBall(_balls[i]);
+				}
 			}
 		}
 
@@ -142,12 +145,8 @@ namespace Snow
 		void SnowGame::Action()
 		{
 			std::this_thread::sleep_for(std::chrono::microseconds(2));
-			static int tick = 0;
-			if (tick++ > 30)
-			{
-				tick = 0;
-				MoveBalls();
-			}
+			
+			MoveBalls();
 		}	
 	}
 }	

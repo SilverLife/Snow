@@ -121,12 +121,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonDefines.h" />
+    <ClInclude Include="GameLogic\Movement.h" />
     <ClInclude Include="GameLogic\SnowGame.h" />
     <ClInclude Include="Graphics\GraphicField.h" />
+    <ClInclude Include="Object\Aim.h" />
     <ClInclude Include="Object\FieldObjects.h" />
+    <ClInclude Include="Object\MovementObject.h" />
     <ClInclude Include="Shared\CommonStructs\Ticker.h" />
     <ClInclude Include="Shared\ConsoleHelper\ConsoleHelper.h" />
     <ClInclude Include="Shared\FieldData\Field.h" />
+    <ClInclude Include="Shared\Geometry\AnalyticalGeometry.h" />
+    <ClInclude Include="Shared\Geometry\Line.h" />
     <ClInclude Include="Shared\Geometry\Point.h" />
     <ClInclude Include="Shared\Geometry\RectangleSize.h" />
   </ItemGroup>
