@@ -55,7 +55,8 @@ namespace Snow
 			//{
 			//	for (PointCoordType j = height - 3; j >= height - 10; j--)
 			//	{
-			//		_field.SetObject({ i,j }, FieldObject::Wall);
+			//		//_field.SetObject({ i,j }, FieldObject::Wall);
+			//		_field.SetObject({ std::rand()% width,std::rand() % height }, FieldObject::Wall);
 			//	}
 			//}
 
@@ -64,8 +65,9 @@ namespace Snow
 			const auto step = work_width / balls_count;
 			for (int i = 0; i < balls_count; i++)
 			{
-				const Point pos = { static_cast<PointCoordType>(3 + i * step), static_cast<PointCoordType>(5) };
-				_balls.emplace_back(pos, Point{ 1,1 }, std::rand() % 30);
+				const Point pos = { static_cast<PointCoordType>(3 + i * step + 30), static_cast<PointCoordType>(25) };
+				//const Point pos = { std::rand() % _field.Size()._width, std::rand() % _field.Size()._height };
+				_balls.emplace_back(pos, Point{ -(std::rand() % 10),  (std::rand() % 10) }, std::rand() % 20 + 20);
 				_field.SetObject(pos, FieldObject::Ball);
 			}
 		}
@@ -74,58 +76,62 @@ namespace Snow
 		{
 			const auto MoveBall = [this](Object::Ball& ball)
 			{
-				const Point position_motion_x = ball.Position() + ball.GetMotionX();
-				const Point position_motion_y = ball.Position() + ball.GetMotionY();
+				const auto new_position = ball.GetNewPosition();
 
-				const bool is_obtacle_x = _field.IsObstacle(position_motion_x);
-				if (is_obtacle_x)
+				if (ball.Position()._x != new_position._x)
 				{
-					ball.ReverseMotionX();
-				}
-				const bool is_obtacle_y = _field.IsObstacle(position_motion_y);
-				if (is_obtacle_y)
-				{
-					ball.ReverseMotionY();
-				}
-
-				if (_field.IsWall(position_motion_x))
-				{
-					DestructWall(position_motion_x);
-				}
-				if (_field.IsWall(position_motion_y))
-				{
-					DestructWall(position_motion_y);
-				}
-
-				if (!is_obtacle_x && !is_obtacle_y)
-				{
-					const auto new_position = ball.GetNewPosition();
-
-					if (_field.IsEmpty(new_position))
+					// Есть движение по x, проверим нет ли там препядствия
+					const Point position_motion_x = { new_position._x, ball.Position()._y };
+					if (_field.IsObstacle(position_motion_x))
 					{
-						_field.MoveObject(ball.Position(), new_position);
-						ball.Move();
+						ball.RotateMovementLineByY();
+						if (_field.IsWall(position_motion_x))
+						{
+							DestructWall(position_motion_x);
+						}
 						return;
 					}
-					if (_field.IsDeathHole(new_position))
+				}
+
+				if (ball.Position()._y != new_position._y)
+				{
+					// Есть движение по y, проверим нет ли там препядствия
+					const Point position_motion_y = { ball.Position()._x, new_position._y };
+					if (_field.IsObstacle(position_motion_y))
 					{
-						// TODO death hole
+						ball.RotateMovementLineByX();
+						if (_field.IsWall(position_motion_y))
+						{
+							DestructWall(position_motion_y);
+						}
 						return;
 					}
+				}
 
-					if (_field.IsWall(new_position))
-					{
-						DestructWall(new_position);
-					}
-
-					if (_field.IsObstacle(new_position))
-					{
-						ball.ReverseMotionX();
-						ball.ReverseMotionY();
-					}
-
+				// По x и y нет препядствий или движения. Проверяем новую позицию
+				if (_field.IsEmpty(new_position))
+				{
+					_field.MoveObject(ball.Position(), new_position);
+					ball.Move(new_position);
 					return;
 				}
+				if (_field.IsDeathHole(new_position))
+				{
+					// TODO death hole
+					return;
+				}
+
+				if (_field.IsWall(new_position))
+				{
+					DestructWall(new_position);
+				}
+
+				if (_field.IsObstacle(new_position))
+				{
+					ball.Reverse();
+				}
+
+				return;
 			};
 
 			for (unsigned int i = 0; i < _balls.size(); i++)
@@ -144,7 +150,7 @@ namespace Snow
 
 		void SnowGame::Action()
 		{
-			std::this_thread::sleep_for(std::chrono::microseconds(2));
+			std::this_thread::sleep_for(std::chrono::microseconds(20));
 			
 			MoveBalls();
 		}	

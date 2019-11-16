@@ -68,6 +68,15 @@ namespace Snow
 			}
 			
 			bool IsDeathHole(Point position) const { return _field.Object(position) == FieldObject::DeathHole; }
+
+			void Print(Point p, char ch)
+			{
+				const auto invertion_position = InvertPosition(p);
+				if (!_field.IsOutOfField(invertion_position))
+				{
+					Shared::ConsoleHelper::Console().Print(invertion_position,ch);
+				}
+			}
 		};
 	}
 }

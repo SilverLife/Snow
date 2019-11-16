@@ -39,6 +39,8 @@ namespace Snow
 
 			bool IsGameOver() const { return !_is_game_active; }
 
+			void Stop() { _is_game_active = false; }
+
 		};
 	}
 }

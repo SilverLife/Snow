@@ -20,7 +20,9 @@ namespace Snow
 		};
 
 
-		class Ball : public Shared::CommonStructs::TickerInt, MovementObject
+
+
+		class Ball : public Shared::CommonStructs::TickerInt, public MovementObject
 		{
 		public:
 			Ball(Point start_position, Point motion_direction, int speed)

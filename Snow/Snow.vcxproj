@@ -127,6 +127,7 @@
     <ClInclude Include="Object\Aim.h" />
     <ClInclude Include="Object\FieldObjects.h" />
     <ClInclude Include="Object\MovementObject.h" />
+    <ClInclude Include="Object\NumberBlock.h" />
     <ClInclude Include="Shared\CommonStructs\Ticker.h" />
     <ClInclude Include="Shared\ConsoleHelper\ConsoleHelper.h" />
     <ClInclude Include="Shared\FieldData\Field.h" />

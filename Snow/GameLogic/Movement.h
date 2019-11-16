@@ -5,6 +5,8 @@
 
 #include "../CommonDefines.h"
 
+#include "../Shared/Geometry/AnalyticalGeometry.h"
+
 namespace Snow
 {
 	namespace GameLogic::Movement
@@ -66,6 +68,19 @@ namespace Snow
 			const auto aim_sign = SignCoordinates(end_pos - start_pos);
 			while (result.back() != end_pos)
 			{
+				result.emplace_back(GameLogic::Movement::GetNextPosition(result.back(), aim_line, aim_sign));
+			}
+			return result;
+		}
+
+		static std::vector<Point> GetPath(Point cur_pos, Point aim_sign, const Line& aim_line, unsigned int path_points_count)
+		{
+			std::vector<Point> result;
+			result.reserve(path_points_count);
+			result.push_back(cur_pos);
+			while (path_points_count > 0)
+			{
+				path_points_count--;
 				result.emplace_back(GameLogic::Movement::GetNextPosition(result.back(), aim_line, aim_sign));
 			}
 			return result;

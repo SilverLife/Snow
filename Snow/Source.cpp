@@ -8,8 +8,9 @@
 
 #include <thread>
 
-int main() {
-
+int main() 
+{
+	//srand(time(0));
 	//for (unsigned char c = 0; c < 255; c++)
 	//{
 	//	std::cout << (int)c << ' ' << c << std::endl;
@@ -19,18 +20,24 @@ int main() {
 	const auto size = Shared::ConsoleHelper::Console().Size();
 	Snow::GameLogic::SnowGame game({ size.first - 5, size.second - 1});
 
-	//Snow::Object::Aim aim({ 25,5 }, { 25,20 });
-	//char ch = 0;
-	//do
-	//{
-	//	ch = _getch();
-	//	aim.MoveAim(ch);
-	//} while (ch != 27);
+	const auto Keyboard = [&game]()
+	{
+		char ch = 0;
+		do
+		{
+			ch = _getch();
+		} while (ch != 27);
+		game.Stop();
+	};
+
+	std::thread keyboard_thread(Keyboard);
 
 	while (!game.IsGameOver())
 	{
 		game.Action();
 	}
+
+	keyboard_thread.join();
 
 	std::system("pause");
 }
